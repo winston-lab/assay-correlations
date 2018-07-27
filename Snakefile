@@ -23,20 +23,20 @@ rule make_stranded_annotations:
 
 rule make_modified_annotations:
     input:
-        annotation = lambda wc: REGIONS[wc.region]["annotation"] if not ASSAYS[wc.assay]["stranded"] else "annotations/" + wc.region + "/" + wc.region + "_stranded.bed",
-        chrsizes = config["genome"]["chrsizes"]
+        annotation = lambda wc: REGIONS[wc.region]["annotation"] if not ASSAYS[wc.assay]["stranded"] else f"annotations/{wc.region}/{wc.region}_stranded.bed",
+        fasta = config["genome"]["fasta"]
     output:
         "annotations/{region}/{region}_{assay}.bed"
     params:
         upstream = lambda wc: -(REGIONS[wc.region]["include"][wc.assay]["five_end"]),
         dnstream = lambda wc: REGIONS[wc.region]["include"][wc.assay]["three_end"]
     shell: """
-        awk 'BEGIN{{FS=OFS="\t"}} $6=="+"{{print $1, $2, $2+1, $4, $5, $6}} $6=="-"{{print $1, $3-1, $3, $4, $5, $6}}' {input.annotation} | bedtools slop -i stdin -g {input.chrsizes} -l {params.upstream} -r {params.dnstream} -s | LC_COLLATE=C sort -k1,1 -k2,2n > {output}
+        awk 'BEGIN{{FS=OFS="\t"}} $6=="+"{{print $1, $2, $2+1, $4, $5, $6}} $6=="-"{{print $1, $3-1, $3, $4, $5, $6}}' {input.annotation} | bedtools slop -i stdin -g <(faidx {input.fasta} -i chromsizes) -l {params.upstream} -r {params.dnstream} -s | LC_COLLATE=C sort -k1,1 -k2,2n > {output}
         """
 
 rule map_coverage:
     input:
-        annotation = lambda wc: REGIONS[wc.region]["annotation"] if (not ASSAYS[wc.assay]["stranded"] and REGIONS[wc.region]["include"][wc.assay]["whole-annotation"]) else "annotations/" + wc.region + "/" + wc.region + "_stranded.bed" if REGIONS[wc.region]["include"][wc.assay]["whole-annotation"] else "annotations/" + wc.region + "/" + wc.region + "_" + wc.assay + ".bed",
+        annotation = lambda wc: REGIONS[wc.region]["annotation"] if (not ASSAYS[wc.assay]["stranded"] and REGIONS[wc.region]["include"][wc.assay]["whole-annotation"]) else f"annotations/{wc.region}/{wc.region}_stranded.bed" if REGIONS[wc.region]["include"][wc.assay]["whole-annotation"] else f"annotations/{wc.region}/{wc.region}_{wc.assay}.bed",
         coverage = lambda wc: ASSAYS[wc.assay]["coverage"][wc.sample]["path"]
     output:
         "scores/{region}/{region}_{assay}_{sample}.tsv"
@@ -74,5 +74,4 @@ rule plot_scatter:
         scatter = "figures/{region}_{condition}_allassays-scatterplots.svg"
     script:
         "scripts/assay_correlations.R"
-
 

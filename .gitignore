@@ -3,3 +3,4 @@ figures/
 scores/
 .snakemake/
 config.yaml
+Rplots.pdf

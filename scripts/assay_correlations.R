@@ -11,25 +11,25 @@ scatter = function(intable='coding-genes_WT-37C_allassays.tsv',
                    cutoff_low = 0.01,
                    outpath = 'test.svg'){
     df = read_tsv(intable,
-                  col_names=c('chrom', 'start', 'end', 'name', 'score', 'strand', 'assay')) %>% 
+                  col_names=c('chrom', 'start', 'end', 'name', 'score', 'strand', 'assay')) %>%
         mutate(score=score/(end-start),
-               assay = fct_inorder(assay, ordered=TRUE)) %>% 
-        group_by(assay) %>% 
-        mutate(score=log10(score+pcount)) %>% 
+               assay = fct_inorder(assay, ordered=TRUE)) %>%
+        group_by(assay) %>%
+        mutate(score=log10(score+pcount)) %>%
         mutate(score=scale(score))
-    
+
     maxsignal = df %>% pull(score) %>% quantile(probs=cutoff_high)
     minsignal = df %>% pull(score) %>% quantile(probs=cutoff_low)
     n_assays = n_distinct(df[["assay"]])
-    
-    df = df %>% 
+
+    df = df %>%
         select(-c(chrom, start, end, strand)) %>%
         spread(key=assay, value=score) %>%
         select(-name)
-        
+
     mincor = min(cor(df, use="complete.obs")) * .99
     plots = list()
-    
+
     #for each row
     for (i in 1:ncol(df)){
         #for each column
@@ -54,8 +54,8 @@ scatter = function(intable='coding-genes_WT-37C_allassays.tsv',
                         geom_density(aes(y=..scaled..), fill="#114477", size=0.8) +
                         scale_y_continuous(breaks=c(0,.5,1)) +
                         scale_x_continuous(limits=c(minsignal, maxsignal)) +
-                        annotate("text", x=maxsignal, y=0.9, hjust=1, 
-                                 label=unique(subdf$sample), size=10/72*25.4, fontface="plain") 
+                        annotate("text", x=maxsignal, y=0.9, hjust=1,
+                                 label=unique(subdf$sample), size=10/72*25.4, fontface="plain")
                 plots[[idx]] = plot
             }
             #bottom left (scatter)
@@ -75,7 +75,7 @@ scatter = function(intable='coding-genes_WT-37C_allassays.tsv',
             }
         }
     }
-    
+
     mat = ggmatrix(plots, nrow=ncol(df), ncol=ncol(df),
                    title = paste0(nrow(df), " ", anno_label, ", ", condition),
                    xAxisLabels = names(df), yAxisLabels = names(df), switch="both") +
@@ -86,12 +86,12 @@ scatter = function(intable='coding-genes_WT-37C_allassays.tsv',
               strip.text = element_text(size=12, color="black", face="bold"),
               strip.text.y = element_text(angle=180, hjust=1),
               strip.placement="outside")
-    
+
     w = 3+n_assays*4
     h = 9/16*w+0.5
     ggsave(outpath, plot=mat, width=w, height=h, units="cm", limitsize=FALSE)
     return(mat)
-}    
+}
 
 plot = scatter(intable = snakemake@input[["table"]],
                pcount = snakemake@params[["pcount"]],
