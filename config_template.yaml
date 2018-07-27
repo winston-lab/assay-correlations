@@ -1,0 +1,148 @@
+genome:
+    fasta: ../genome/S_cerevisiae.R64-2-1.fa
+
+assays:
+    TSS-seq:
+        stranded: True
+        coverage:
+            YPD-1:
+                path: ../tss-seq/coverage/spikenorm/YPD-1_tss-seq-spikenorm-SENSE.bedgraph
+                group: WT-30C
+            YPD-2:
+                path: ../tss-seq/coverage/spikenorm/YPD-2_tss-seq-spikenorm-SENSE.bedgraph
+                group: WT-30C
+            WT-37C-1:
+                path: ../tss-seq/coverage/spikenorm/WT-37C-1_tss-seq-spikenorm-SENSE.bedgraph
+                group: WT-37C
+            WT-37C-2:
+                path: ../tss-seq/coverage/spikenorm/WT-37C-2_tss-seq-spikenorm-SENSE.bedgraph
+                group: WT-37C
+            spt6-1004-37C-1:
+                path: ../tss-seq/coverage/spikenorm/spt6-1004-37C-1_tss-seq-spikenorm-SENSE.bedgraph
+                group: spt6-1004-37C
+            spt6-1004-37C-2:
+                path: ../tss-seq/coverage/spikenorm/spt6-1004-37C-2_tss-seq-spikenorm-SENSE.bedgraph
+                group: spt6-1004-37C
+    TFIIB-ChIP-nexus:
+        stranded: False
+        coverage:
+            WT-30C-1:
+                path: ../chipnexus-tfiib/coverage/libsizenorm/YPD-1_tfiib-chipnexus-libsizenorm-midpoints.bedgraph
+                group: WT-30C
+            WT-30C-2:
+                path: ../chipnexus-tfiib/coverage/libsizenorm/YPD-2_tfiib-chipnexus-libsizenorm-midpoints.bedgraph
+                group: WT-30C
+            WT-37C-1:
+                path: ../chipnexus-tfiib/coverage/libsizenorm/WT-37C-1_tfiib-chipnexus-libsizenorm-midpoints.bedgraph
+                group: WT-37C
+            WT-37C-2:
+                path: ../chipnexus-tfiib/coverage/libsizenorm/WT-37C-2_tfiib-chipnexus-libsizenorm-midpoints.bedgraph
+                group: WT-37C
+            spt6-1004-37C-1:
+                path: ../chipnexus-tfiib/coverage/libsizenorm/spt6-1004-37C-1_tfiib-chipnexus-libsizenorm-midpoints.bedgraph
+                group: spt6-1004-37C
+            spt6-1004-37C-2:
+                path: ../chipnexus-tfiib/coverage/libsizenorm/spt6-1004-37C-2_tfiib-chipnexus-libsizenorm-midpoints.bedgraph
+                group: spt6-1004-37C
+    NET-seq:
+        stranded: True
+        coverage:
+            WT-30C-1:
+                path: ../murawska-net-seq/coverage/libsizenorm/WT-30C-1_netseq-5end-libsizenorm-SENSE.bedgraph
+                group: WT-30C
+            WT-30C-2:
+                path: ../murawska-net-seq/coverage/libsizenorm/WT-30C-2_netseq-5end-libsizenorm-SENSE.bedgraph
+                group: WT-30C
+            WT-37C-1:
+                path: ../murawska-net-seq/coverage/libsizenorm/WT-37C-1_netseq-5end-libsizenorm-SENSE.bedgraph
+                group: WT-37C
+            WT-37C-2:
+                path: ../murawska-net-seq/coverage/libsizenorm/WT-37C-2_netseq-5end-libsizenorm-SENSE.bedgraph
+                group: WT-37C
+            spt6-1004-37C-1:
+                path: ../murawska-net-seq/coverage/libsizenorm/spt6-1004-37C-1_netseq-5end-libsizenorm-SENSE.bedgraph
+                group: spt6-1004-37C
+            spt6-1004-37C-2:
+                path: ../murawska-net-seq/coverage/libsizenorm/spt6-1004-37C-2_netseq-5end-libsizenorm-SENSE.bedgraph
+                group: spt6-1004-37C
+    RNA-seq:
+        stranded: True
+        coverage:
+            WT-37C-1:
+                path: ../other-datasets/uwimana17/coverage/WT-polyA-1_SENSE.bedgraph
+                group: WT-37C
+            WT-37C-2:
+                path: ../other-datasets/uwimana17/coverage/WT-polyA-2_SENSE.bedgraph
+                group: WT-37C
+            WT-37C-3:
+                path: ../other-datasets/uwimana17/coverage/WT-polyA-3_SENSE.bedgraph
+                group: WT-37C
+            WT-37C-4:
+                path: ../other-datasets/uwimana17/coverage/WT-polyA-4_SENSE.bedgraph
+                group: WT-37C
+            # WT-37C-5:
+            #     path: ../other-datasets/uwimana17/coverage/WT-rRNAdepl-1_SENSE.bedgraph
+            #     group: WT-37C
+            # WT-37C-6:
+            #     path: ../other-datasets/uwimana17/coverage/WT-rRNAdepl-2_SENSE.bedgraph
+            #     group: WT-37C
+            spt6-1004-37C-1:
+                path: ../other-datasets/uwimana17/coverage/spt6-1004-polyA-1_SENSE.bedgraph
+                group: spt6-1004-37C
+            spt6-1004-37C-2:
+                path: ../other-datasets/uwimana17/coverage/spt6-1004-polyA-2_SENSE.bedgraph
+                group: spt6-1004-37C
+            spt6-1004-37C-3:
+                path: ../other-datasets/uwimana17/coverage/spt6-1004-polyA-3_SENSE.bedgraph
+                group: spt6-1004-37C
+            spt6-1004-37C-4:
+                path: ../other-datasets/uwimana17/coverage/spt6-1004-polyA-4_SENSE.bedgraph
+                group: spt6-1004-37C
+            # spt6-1004-37C-5:
+            #     path: ../other-datasets/uwimana17/coverage/spt6-1004-rRNAdepl-1_SENSE.bedgraph
+            #     group: spt6-1004-37C
+            # spt6-1004-37C-6:
+            #     path: ../other-datasets/uwimana17/coverage/spt6-1004-rRNAdepl-2_SENSE.bedgraph
+            #     group: spt6-1004-37C
+    RNAPII-ChIP-nexus:
+        stranded: False
+        coverage:
+            YPD-1:
+                path: ../chipnexus-rnapii/coverage/libsizenorm/YPD-1_rnapii-chipnexus-libsizenorm-midpoints.bedgraph
+                group: WT-30C
+            YPD-2:
+                path: ../chipnexus-rnapii/coverage/libsizenorm/YPD-2_rnapii-chipnexus-libsizenorm-midpoints.bedgraph
+                group: WT-30C
+
+conditions:
+    - WT-30C
+    - WT-37C
+    - spt6-1004-37C
+
+regions:
+    coding-genes:
+        annotation: ../genome/annotations/Scer_transcripts_w_verifiedORFs.bed
+        label: coding genes
+        cutoff_high: 0.998
+        cutoff_low: 0.01
+        include:
+            TSS-seq:
+                whole-annotation: False
+                refpoint: TSS
+                five_end: -30
+                three_end: 30
+            TFIIB-ChIP-nexus:
+                whole-annotation: False
+                refpoint: TSS
+                five_end: -120
+                three_end: 0
+            RNAPII-ChIP-nexus:
+                whole-annotation: True
+            NET-seq:
+                whole-annotation: False
+                refpoint: TSS
+                five_end: 0
+                three_end: 500
+            RNA-seq:
+                whole-annotation: True
+
