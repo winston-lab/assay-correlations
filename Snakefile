@@ -10,6 +10,7 @@ localrules: all,
 
 rule all:
     input:
+        "config.yaml",
         expand("figures/{region}_{condition}_allassays-scatterplots.svg", region=REGIONS, condition=CONDITIONS)
 
 rule make_stranded_annotations:
