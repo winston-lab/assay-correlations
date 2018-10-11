@@ -3,7 +3,7 @@
 
 ## description
 
-A pipeline for calculating and visualizing the correlation of different assays over a set of features. Used in [our preprint](https://www.biorxiv.org/content/early/2018/06/15/347575).
+A pipeline for calculating and visualizing the correlation of different assays over a set of features. Used in our [2018 Spt6 publication](https://doi.org/10.1016/j.molcel.2018.09.005).
 
 ## requirements
 
