@@ -21,7 +21,7 @@ A pipeline for calculating and visualizing the correlation of different assays o
     - "stranded" assays such as TSS-seq, NET-seq, and RNA-seq should denote the strand as part of the chromosome specification, i.e. "chrI-plus" or "chrI-minus". Files with this format are automatically generated from my other pipelines and named `*-SENSE.bedgraph` or `*-ANTISENSE.bedgraph`.
 
 - [BED6](https://genome.ucsc.edu/FAQ/FAQformat.html#format1) format annotation files specifying the regions over which to correlate signal
-    - the BED file will be used to generate subregions as specified, i.e. given a BED file of transcript coordinates, TSS-seq signal \pm 30nt from the 5' end can be correlated with RNA-seq signal over the entire transcript
+    - the BED file will be used to generate subregions as specified, i.e. given a BED file of transcript coordinates, TSS-seq signal $\pm$ 30nt from the 5' end can be correlated with RNA-seq signal over the entire transcript
 
 ## instructions
 **0**. Clone this repository.
