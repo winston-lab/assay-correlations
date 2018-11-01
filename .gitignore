@@ -4,3 +4,4 @@ scores/
 .snakemake/
 config.yaml
 Rplots.pdf
+mogrify.log

@@ -6,6 +6,9 @@ REGIONS = config["regions"]
 ASSAYS = config["assays"]
 CONDITIONS = config["conditions"]
 
+onsuccess:
+    shell("(./mogrify.sh) > mogrify.log")
+
 localrules: all,
 
 rule all:
