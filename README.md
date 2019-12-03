@@ -37,7 +37,7 @@ git clone https://github.com/winston-lab/assay-correlations.git
 cd assay-correlations
 
 # create the assay_correlations environment
-conda env create -v -f envs/default.yaml
+conda env create -v -f envs/assay_correlations.yaml
 
 # activate the environment
 source activate assay_correlations

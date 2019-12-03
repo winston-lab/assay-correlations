@@ -1,0 +1,20 @@
+name: assay_correlations
+channels:
+    - conda-forge
+    - bioconda
+
+dependencies:
+    - snakemake=5.5.3=0
+    - gawk=4.2.1=h470a237_0
+    - sed=4.4=h6e7b4c1_1001
+    - bedtools=2.27.1=he941832_2
+    - pyfaidx=0.5.5.2=py_0
+    - r-tidyverse=1.2.1
+    - r-stringi=1.2.4
+    - r-svglite=1.2.1
+    - r-gdtools=0.1.7
+    - r-ggally=1.4.0
+    - r-hexbin=1.28.0
+    - r-viridis=0.5.1
+    - svg2png=4.1.1
+
