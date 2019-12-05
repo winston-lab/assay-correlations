@@ -1,12 +1,10 @@
 library(tidyverse)
-library(forcats)
-library(viridis)
 library(GGally)
 
-scatter = function(intable='coding-genes_WT-37C_allassays.tsv',
+scatter = function(intable='nonoverlapping-coding-genes_WT-30C_allassays.tsv',
                    pcount=0.01,
                    anno_label='coding genes',
-                   condition = 'WT-37C',
+                   condition = 'WT-30C',
                    cutoff_high = 0.999,
                    cutoff_low = 0.01,
                    outpath = 'test.svg'){
@@ -15,14 +13,14 @@ scatter = function(intable='coding-genes_WT-37C_allassays.tsv',
         mutate(score=score/(end-start),
                assay = fct_inorder(assay, ordered=TRUE)) %>%
         group_by(assay) %>%
-        mutate(score=log10(score+pcount)) %>%
-        mutate(score=scale(score))
+        mutate(score = log10(scales::rescale(score) + pcount)) %>%
+        mutate(score = (score-mean(score))/sd(score))
 
-    maxsignal = df %>% pull(score) %>% quantile(probs=cutoff_high)
-    minsignal = df %>% pull(score) %>% quantile(probs=cutoff_low)
+    maxsignal = df %>% pull(score) %>% quantile(probs=cutoff_high, na.rm=TRUE)
+    minsignal = df %>% pull(score) %>% quantile(probs=cutoff_low, na.rm=TRUE)
     n_assays = n_distinct(df[["assay"]])
 
-    df = df %>%
+    df %<>%
         select(-c(chrom, start, end, strand)) %>%
         spread(key=assay, value=score) %>%
         select(-name)
@@ -67,8 +65,8 @@ scatter = function(intable='coding-genes_WT-37C_allassays.tsv',
                     stat_bin_hex(geom="point", aes(color=log10(..count..)),
                     # stat_bin_hex(geom="point", aes(color=..count..),
                                  binwidth=c(.075,.075), size=0.5, shape=16, stroke=0) +
-                    scale_fill_viridis(option="inferno") +
-                    scale_color_viridis(option="inferno") +
+                    scale_fill_viridis_c(option="inferno") +
+                    scale_color_viridis_c(option="inferno") +
                     scale_x_continuous(limits = c(minsignal, maxsignal)) +
                     scale_y_continuous(limits = c(minsignal, maxsignal))
                 plots[[idx]] = plot
@@ -80,10 +78,10 @@ scatter = function(intable='coding-genes_WT-37C_allassays.tsv',
                    title = paste0(nrow(df), " ", anno_label, ", ", condition),
                    xAxisLabels = names(df), yAxisLabels = names(df), switch="both") +
         theme_light() +
-        theme(plot.title = element_text(size=12, color="black", face="bold"),
+        theme(plot.title = element_text(size=12, color="black"),
               axis.text = element_text(size=10, margin=margin(0,0,0,0,"pt")),
               strip.background = element_blank(),
-              strip.text = element_text(size=12, color="black", face="bold"),
+              strip.text = element_text(size=12, color="black"),
               strip.text.y = element_text(angle=180, hjust=1),
               strip.placement="outside")
 

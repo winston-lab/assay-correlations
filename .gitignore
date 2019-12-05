@@ -5,3 +5,4 @@ scores/
 config.yaml
 Rplots.pdf
 mogrify.log
+*.*.swp
