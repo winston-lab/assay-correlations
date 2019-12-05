@@ -6,8 +6,8 @@ scatter = function(intable='nonoverlapping-coding-genes_WT-30C_allassays.tsv',
                    anno_label='coding genes',
                    condition = 'WT-30C',
                    cutoff_high = 0.999,
-                   cutoff_low = 0.01,
-                   outpath = 'test.svg'){
+                   cutoff_low = 0.001,
+                   outpath = 'test.pdf'){
     df = read_tsv(intable,
                   col_names=c('chrom', 'start', 'end', 'name', 'score', 'strand', 'assay')) %>%
         mutate(score=score/(end-start),
@@ -61,14 +61,19 @@ scatter = function(intable='nonoverlapping-coding-genes_WT-30C_allassays.tsv',
                 subdf = df %>% select(i,j) %>% gather(xsample, xvalue, -1) %>%
                             gather(ysample, yvalue, -c(2:3))
                 plot = ggplot(data = subdf, aes(x=xvalue+pcount, y=yvalue+pcount)) +
-                    geom_abline(intercept = 0, slope=1, color="grey80", size=1) +
-                    stat_bin_hex(geom="point", aes(color=log10(..count..)),
-                    # stat_bin_hex(geom="point", aes(color=..count..),
-                                 binwidth=c(.075,.075), size=0.5, shape=16, stroke=0) +
+                    geom_abline(intercept = 0, slope=1, color="grey80", size=0.5) +
+                    stat_bin_hex(geom="point", aes(color=..count..),
+                                 # binwidth=c(.075,.075),
+                                 binwidth=c(0.1,0.1),
+                                 size=0.3,
+                                 shape=16,
+                                 alpha=0.7) +
                     scale_fill_viridis_c(option="inferno") +
                     scale_color_viridis_c(option="inferno") +
-                    scale_x_continuous(limits = c(minsignal, maxsignal)) +
-                    scale_y_continuous(limits = c(minsignal, maxsignal))
+                    scale_x_continuous(limits = c(minsignal, maxsignal),
+                                       breaks=scales::pretty_breaks(4)) +
+                    scale_y_continuous(limits = c(minsignal, maxsignal),
+                                       breaks=scales::pretty_breaks(4))
                 plots[[idx]] = plot
             }
         }
@@ -78,12 +83,15 @@ scatter = function(intable='nonoverlapping-coding-genes_WT-30C_allassays.tsv',
                    title = paste0(nrow(df), " ", anno_label, ", ", condition),
                    xAxisLabels = names(df), yAxisLabels = names(df), switch="both") +
         theme_light() +
-        theme(plot.title = element_text(size=12, color="black"),
-              axis.text = element_text(size=10, margin=margin(0,0,0,0,"pt")),
+        theme(plot.title = element_text(size=10, color="black"),
+              axis.text = element_text(size=8, margin=margin(0,0,0,0,"pt")),
               strip.background = element_blank(),
-              strip.text = element_text(size=12, color="black"),
+              strip.text = element_text(size=10, color="black"),
               strip.text.y = element_text(angle=180, hjust=1),
-              strip.placement="outside")
+              strip.text.x = element_text(angle=20, vjust=1, hjust=1),
+              strip.placement="outside",
+              panel.grid.minor = element_blank(),
+              panel.spacing=unit(1, "pt"))
 
     w = 3+n_assays*4
     h = 9/16*w+0.5
